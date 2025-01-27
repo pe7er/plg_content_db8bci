@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <extension type="plugin" group="content" method="upgrade">
     <name>PLG_CONTENT_DB8BCI</name>
     <author>Peter Martin</author>
@@ -22,88 +21,30 @@
         <fields name="params">
 
 
-            <fieldset name="backendArticleImages" label="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_FIELDSET_LABEL"
-                      description="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_FIELDSET_DESC">
-                <field
-                        name="enableBackendArticleImages"
-                        type="radio"
-                        label="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES"
-                        description="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_DESC"
-                        class="btn-group btn-group-yesno"
-                        default="1">
+            <fieldset name="backendArticleImages" label="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_FIELDSET_LABEL" description="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_FIELDSET_DESC">
+                <field name="enableBackendArticleImages" type="radio" label="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES" description="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_DESC" class="btn-group btn-group-yesno" default="1">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
-                <field
-                        name="showArticleImagePlaceholder"
-                        type="radio"
-                        label="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_SHOW_PLACEHOLDER"
-                        description="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_SHOW_PLACEHOLDER_DESC"
-                        class="btn-group btn-group-yesno"
-                        default="0"
-                        showon="enableBackendArticleImages:1"
-                >
+                <field name="showArticleImagePlaceholder" type="radio" label="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_SHOW_PLACEHOLDER" description="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_SHOW_PLACEHOLDER_DESC" class="btn-group btn-group-yesno" default="0" showon="enableBackendArticleImages:1">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
-                <field
-                        name="articleImagesMaxWidth"
-                        type="text"
-                        label="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_MAX_WIDTH"
-                        description="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_MAX_WIDTH_DESC"
-                        default="100"
-                        showon="enableBackendArticleImages:1"
-                />
-                <field
-                        name="articleImagesMaxHeight"
-                        type="text"
-                        label="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_MAX_HEIGHT"
-                        description="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_MAX_HEIGHT_DESC"
-                        default="75"
-                        showon="enableBackendArticleImages:1"
-                />
+                <field name="articleImagesMaxWidth" type="text" label="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_MAX_WIDTH" description="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_MAX_WIDTH_DESC" default="100" showon="enableBackendArticleImages:1" />
+                <field name="articleImagesMaxHeight" type="text" label="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_MAX_HEIGHT" description="PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGES_MAX_HEIGHT_DESC" default="75" showon="enableBackendArticleImages:1" />
             </fieldset>
 
-            <fieldset name="backendCategoryImages" label="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_FIELDSET_LABEL"
-                      description="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_FIELDSET_DESC">
-                <field
-                        name="enableBackendCategoryImages"
-                        type="radio"
-                        label="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES"
-                        description="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_DESC"
-                        class="btn-group btn-group-yesno"
-                        default="1">
+            <fieldset name="backendCategoryImages" label="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_FIELDSET_LABEL" description="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_FIELDSET_DESC">
+                <field name="enableBackendCategoryImages" type="radio" label="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES" description="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_DESC" class="btn-group btn-group-yesno" default="1">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
-                <field
-                        name="showCategoryImagePlaceholder"
-                        type="radio"
-                        label="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_SHOW_PLACEHOLDER"
-                        description="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_SHOW_PLACEHOLDER_DESC"
-                        class="btn-group btn-group-yesno"
-                        default="0"
-                        showon="enableBackendCategoryImages:1"
-                >
+                <field name="showCategoryImagePlaceholder" type="radio" label="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_SHOW_PLACEHOLDER" description="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_SHOW_PLACEHOLDER_DESC" class="btn-group btn-group-yesno" default="0" showon="enableBackendCategoryImages:1">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
-                <field
-                        name="categoryImagesMaxWidth"
-                        type="text"
-                        label="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_MAX_WIDTH"
-                        description="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_MAX_WIDTH_DESC"
-                        default="100"
-                        showon="enableBackendCategoryImages:1"
-                />
-                <field
-                        name="categoryImagesMaxHeight"
-                        type="text"
-                        label="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_MAX_HEIGHT"
-                        description="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_MAX_HEIGHT_DESC"
-                        default="75"
-                        showon="enableBackendCategoryImages:1"
-                />
+                <field name="categoryImagesMaxWidth" type="text" label="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_MAX_WIDTH" description="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_MAX_WIDTH_DESC" default="100" showon="enableBackendCategoryImages:1" />
+                <field name="categoryImagesMaxHeight" type="text" label="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_MAX_HEIGHT" description="PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGES_MAX_HEIGHT_DESC" default="75" showon="enableBackendCategoryImages:1" />
             </fieldset>
 
         </fields>

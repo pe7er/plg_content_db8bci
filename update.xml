@@ -5,12 +5,12 @@
         <element>plg_content_db8bci</element>
         <type>plugin</type>
         <folder>content</folder>
-        <version>0.0.9</version>
+        <version>1.0.0</version>
         <infourl title="plg_content_db8bci">https://github.com/pe7er/plg_content_db8bci</infourl>
         <downloads>
             <downloadurl type="full" format="zip">https://github.com/pe7er/plg_content_db8bci/releases/download/1.0.0/plg_content_db8bci-1.0.0.zip</downloadurl>
         </downloads>
-        <sha512>8f3c50f9e24d3b261d07f5ad5afe4444aa042bf822e57765f4211e873dd75800b8fbb62e69dd9acdd4fea859a971cd19d1f5feba64d70ac88364050ef93380a3</sha512>
+        <sha512>32f035d21aa4fe14db29472ee9a38c97516a9b726c5c007d218749c52858e188f1472ab801ead6a43da4a90c2d76fa777c88984026fec0799bea1c35236db9f2</sha512>
         <tags>
             <tag>stable</tag>
         </tags>
