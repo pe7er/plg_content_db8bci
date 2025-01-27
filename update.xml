@@ -1,0 +1,22 @@
+<updates>
+    <update>
+        <name>plg_content_db8bci</name>
+        <description>This plugin displays images in the back-end Article and Category lists, making it easy to see which items have images or not.</description>
+        <element>plg_content_db8bci</element>
+        <type>plugin</type>
+        <folder>content</folder>
+        <version>0.0.9</version>
+        <infourl title="plg_content_db8bci">https://github.com/pe7er/plg_content_db8bci</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/pe7er/plg_content_db8bci/releases/download/1.0.0/plg_content_db8bci-1.0.0.zip</downloadurl>
+        </downloads>
+        <sha512>8f3c50f9e24d3b261d07f5ad5afe4444aa042bf822e57765f4211e873dd75800b8fbb62e69dd9acdd4fea859a971cd19d1f5feba64d70ac88364050ef93380a3</sha512>
+        <tags>
+            <tag>stable</tag>
+        </tags>
+        <maintainer>Peter Martin</maintainer>
+        <maintainerurl>https://db8.nl</maintainerurl>
+        <php_minimum>8.1.0</php_minimum>
+        <targetplatform name="joomla" version="((4)|(5))" />
+    </update>
+</updates>

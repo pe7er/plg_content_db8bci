@@ -1,0 +1,98 @@
+name: Create Release
+
+permissions:
+  contents: write
+  issues: write
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Load variables from .env
+        run: |
+          while IFS='=' read -r key value; do
+            echo "$key=$value" >> $GITHUB_ENV;
+          done < .env
+
+      - name: Extract version from update.xml
+        run: |
+          VERSION_IN_XML=$(grep '<version>' update.xml | sed -n 's/.*<version>\(.*\)<\/version>.*/\1/p')
+          echo "debug: VERSION_IN_XML=$VERSION_IN_XML"
+          echo "VERSION_IN_XML=$VERSION_IN_XML" >> $GITHUB_ENV
+        working-directory: ../${{ env.EXTENSION }}
+
+      - name: Check for version changes
+        id: version_check
+        run: |
+          if [ "${{ env.VERSION }}" == "$VERSION_IN_XML" ]; then
+            echo "No changes found, no new package created. Version ${{ env.VERSION }} matches the version in update.xml ($VERSION_IN_XML)."
+            echo "version_changed=false" >> $GITHUB_ENV
+          else
+            echo "version_changed=true" >> $GITHUB_ENV
+          fi
+    
+      - name: Set up Python
+        if: env.version_changed == 'true'
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Update module's XML manifest
+        if: env.version_changed == 'true'
+        run: python .github/scripts/update_manifest.py ${{ env.EXTENSION }}/${{ env.MANIFEST }} ${{ env.VERSION }}
+
+      - name: Zip the module folder
+        if: env.version_changed == 'true'
+        run: |
+          cd ${{ env.EXTENSION }}
+          zip -r ../${{ env.EXTENSION }}-${{ env.VERSION }}.zip .
+          cd ..
+
+      - name: Compute SHA512 checksum
+        if: env.version_changed == 'true'
+        run: |
+          sha512sum ${{ env.EXTENSION }}-${{ env.VERSION }}.zip > ${{ env.EXTENSION }}-${{ env.VERSION }}.zip.sha512
+          SHA512=$(cat ${{ env.EXTENSION }}-${{ env.VERSION }}.zip.sha512 | cut -d' ' -f1)
+          echo "SHA512=$SHA512" >> $GITHUB_ENV
+
+      - name: Create Release
+        if: env.version_changed == 'true'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.VERSION }}
+          release_name: Release ${{ env.VERSION }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        if: env.version_changed == 'true'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./${{ env.EXTENSION }}-${{ env.VERSION }}.zip
+          asset_name: ${{ env.EXTENSION }}-${{ env.VERSION }}.zip
+          asset_content_type: application/zip
+
+      - name: Update update.xml and commit changes
+        if: env.version_changed == 'true'
+        run: |
+          DOWNLOAD_URL="https://github.com/pe7er/${{ env.EXTENSION }}/releases/download/${{ env.VERSION }}/${{ env.EXTENSION }}-${{ env.VERSION }}.zip"
+          python .github/scripts/update_update_xml.py ${{ env.VERSION }} $DOWNLOAD_URL ${{ env.SHA512 }}
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add update.xml ${{ env.EXTENSION }}/${{ env.MANIFEST }}
+          git commit -m "Update version to ${{ env.VERSION }}"
+          git push
