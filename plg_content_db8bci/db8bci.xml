@@ -95,4 +95,7 @@
 
         </fields>
     </config>
+    <updateservers>
+        <server type="extension" name="plg_content_db8bci">https://github.com/pe7er/plg_content_db8bci/blob/main/update.xml</server>
+    </updateservers>
 </extension>
