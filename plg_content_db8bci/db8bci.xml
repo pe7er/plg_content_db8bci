@@ -6,7 +6,7 @@
     <license>GNU General Public License version 2</license>
     <authorEmail>joomla@db8.nl</authorEmail>
     <authorUrl>https://db8.nl</authorUrl>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <description>PLG_CONTENT_DB8BCI_XML_DESCRIPTION</description>
     <namespace path="src">Db8\Plugin\Content\Db8Bci</namespace>
 
