@@ -1,6 +1,6 @@
 <updates>
     <update>
-        <name>plg_content_db8bci</name>
+        <name>PLG_CONTENT_DB8BCI</name>
         <description>This plugin displays images in the back-end Article and Category lists, making it easy to see which items have images or not.</description>
         <element>db8bci</element>
         <type>plugin</type>
