@@ -5,6 +5,7 @@
         <element>db8bci</element>
         <type>plugin</type>
         <folder>content</folder>
+        <client>site</client>
         <version>1.0.4</version>
         <infourl title="plg_content_db8bci">https://github.com/pe7er/plg_content_db8bci</infourl>
         <downloads>
