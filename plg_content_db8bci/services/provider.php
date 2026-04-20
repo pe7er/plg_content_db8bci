@@ -4,7 +4,7 @@
  * @subpackage  Content.db8bci
  *
  * @author      Peter Martin <joomla@db8.nl>
- * @copyright   Copyright (C) 2025 Peter Martin. All rights reserved.
+ * @copyright   Copyright (C) 2025 - 2026 Peter Martin. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @link        https://db8.nl
  */

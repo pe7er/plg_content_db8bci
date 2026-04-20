@@ -4,7 +4,7 @@
  * @subpackage  Content.db8bci
  *
  * @author      Peter Martin <joomla@db8.nl>
- * @copyright   Copyright (C) 2025 Peter Martin. All rights reserved.
+ * @copyright   Copyright (C) 2025 - 2026 Peter Martin. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @link        https://db8.nl
  */
@@ -77,7 +77,7 @@ final class Db8Bci extends CMSPlugin
             $this->isView('com_content', 'articles')
         ) {
             $this->renderBackendImages('articleList', 'getArticleIntroImage',
-                Text::_('PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGE'));
+                Text::_('PLG_CONTENT_DB8BCI_BACKEND_ARTICLE_IMAGE'), 'article');
         }
 
         /**
@@ -89,7 +89,7 @@ final class Db8Bci extends CMSPlugin
             $this->isView('com_categories', 'categories', 'com_content')
         ) {
             $this->renderBackendImages('categoryList', 'getCategoryImage',
-                Text::_('PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGE')
+                Text::_('PLG_CONTENT_DB8BCI_BACKEND_CATEGORY_IMAGE'), 'category'
             );
         }
     }
@@ -98,10 +98,11 @@ final class Db8Bci extends CMSPlugin
      * @param string $tableId
      * @param string $imageMethod
      * @param string $headerText
+     * @param string $paramPrefix
      * @return void
      * @throws \Exception
      */
-    private function renderBackendImages(string $tableId, string $imageMethod, string $headerText): void
+    private function renderBackendImages(string $tableId, string $imageMethod, string $headerText, string $paramPrefix): void
     {
         $buffer = $this->app->getBody();
         libxml_use_internal_errors(true);
@@ -114,7 +115,7 @@ final class Db8Bci extends CMSPlugin
         }
 
         $this->addTableHeader($table, $dom, $headerText);
-        $this->addImagesToTable($table, $dom, [$this, $imageMethod]);
+        $this->addImagesToTable($table, $dom, [$this, $imageMethod], $paramPrefix);
 
         $this->app->setBody($dom->saveHTML());
     }
@@ -148,12 +149,12 @@ final class Db8Bci extends CMSPlugin
      * @param \DOMElement $table
      * @param \DOMDocument $dom
      * @param callable $getImageCallback
+     * @param string $paramPrefix
      * @return void
      * @throws \DOMException
      */
-    private function addImagesToTable(DOMElement $table, DOMDocument $dom, callable $getImageCallback): void
+    private function addImagesToTable(DOMElement $table, DOMDocument $dom, callable $getImageCallback, string $paramPrefix): void
     {
-        $params = $this->pluginParams;
         $tbody = $table->getElementsByTagName('tbody')->item(0);
 
         if (!$tbody) {
@@ -168,7 +169,7 @@ final class Db8Bci extends CMSPlugin
 
             $image = $getImageCallback($id);
             if ($image) {
-                $this->addImageCell($row, $dom, $image, $params);
+                $this->addImageCell($row, $dom, $image, $paramPrefix);
             }
         }
     }
@@ -177,34 +178,45 @@ final class Db8Bci extends CMSPlugin
      * @param \DOMElement $row
      * @param \DOMDocument $dom
      * @param string $image
-     * @param array $params
+     * @param string $paramPrefix
      * @return void
      * @throws \DOMException
      */
-    private function addImageCell(DOMElement $row, DOMDocument $dom, string $image, array $params): void
+    private function addImageCell(DOMElement $row, DOMDocument $dom, string $image, string $paramPrefix): void
     {
+        $params = $this->pluginParams;
+        $showPlaceholderKey = 'show' . ucfirst($paramPrefix) . 'ImagePlaceholder';
+        $maxWidthKey = $paramPrefix . 'ImagesMaxWidth';
+        $maxHeightKey = $paramPrefix . 'ImagesMaxHeight';
+
         $imageCell = $dom->createElement('td');
         $filename = JPATH_ROOT . '/' . strtok($image, '#');
 
-        if (file_exists($filename)) {
-            [$width, $height] = getimagesize($filename);
-
-            if ($params['showArticleImagePlaceholder'] ?? false) {
-                $svg = $this->generatePlaceholderSvg($width, $height);
-                $fragment = $dom->createDocumentFragment();
-                $fragment->appendXML($svg);
-                $imageCell->appendChild($fragment);
-            } else {
-                $img = $dom->createElement('img');
-                $img->setAttribute('src', Uri::root() . $image);
-                $img->setAttribute('style',
-                    'max-width: ' . $params['articleImagesMaxWidth'] . 'px; '
-                    . 'max-height: ' . $params['articleImagesMaxHeight'] . 'px;');
-                $imageCell->appendChild($img);
-            }
-
-            $row->appendChild($imageCell);
+        if (!file_exists($filename)) {
+            return;
         }
+
+        $size = @getimagesize($filename);
+        if ($size === false) {
+            return;
+        }
+        [$width, $height] = $size;
+
+        if ($params[$showPlaceholderKey] ?? false) {
+            $svg = $this->generatePlaceholderSvg($width, $height);
+            $fragment = $dom->createDocumentFragment();
+            $fragment->appendXML($svg);
+            $imageCell->appendChild($fragment);
+        } else {
+            $img = $dom->createElement('img');
+            $img->setAttribute('src', Uri::root() . $image);
+            $img->setAttribute('style',
+                'max-width: ' . (int) $params[$maxWidthKey] . 'px; '
+                . 'max-height: ' . (int) $params[$maxHeightKey] . 'px;');
+            $imageCell->appendChild($img);
+        }
+
+        $row->appendChild($imageCell);
     }
 
     /**
@@ -215,8 +227,8 @@ final class Db8Bci extends CMSPlugin
     private function generatePlaceholderSvg(int $width, int $height): string
     {
         return <<<SVG
-<svg xmlns="http://www.w3.org/2000/svg" width="75" height="50" viewBox="0 0 75 50">
-    <rect fill="#ddd" width="75" height="50"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="$width" height="$height" viewBox="0 0 $width $height">
+    <rect fill="#ddd" width="$width" height="$height"/>
     <text fill="rgba(0,0,0,0.5)" font-family="sans-serif" font-size="12" dy="10.5"
           font-weight="bold" x="50%" y="40%" text-anchor="middle">
         $width x $height

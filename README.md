@@ -1,12 +1,16 @@
 # plg_content_db8bci - Content - db8 Backend Content Images
 
-Joomla 4/5 content plugin
+Joomla 4, Joomla 5 and Joomla 6 content plugin
 
 ## Available Languages
 - English (en-GB)
+- German (de-DE)
+- Spanish (es-ES)
+- French (fr-FR)
+- Dutch (nl-NL)
 
 ## Installation
-Install like any other Joomla 4 or Joomla 5 plugin.
+Install like any other Joomla plugin.
 
 ## Configuration
 After installation, configure the plugin via: 
@@ -20,6 +24,6 @@ In the backend lists of Categories and Articles will display an image (or placeh
 
 ## Changelog
 
-### 1.0.4 - April 2028
+### 1.0.4 - April 2026
 - Fixed issue with missing thumbnails when using filters in links like /administrator/index.php?option=com_content&filter[category_id]=11&filter[published]=1&filter[level]=1
 - Fixed issue with missing thumbnails Categories in links like /administrator/index.php?option=com_categories&extension=com_content

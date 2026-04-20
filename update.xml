@@ -17,6 +17,6 @@
         <maintainer>Peter Martin</maintainer>
         <maintainerurl>https://db8.nl</maintainerurl>
         <php_minimum>8.1.0</php_minimum>
-        <targetplatform name="joomla" version="((4)|(5))|(6))" />
+        <targetplatform name="joomla" version="((4)|(5)|(6))" />
     </update>
 </updates>
