@@ -1,7 +1,7 @@
 <extension type="plugin" group="content" method="upgrade">
     <name>PLG_CONTENT_DB8BCI</name>
     <author>Peter Martin</author>
-    <creationDate>April 2026</creationDate>
+    <creationDate>2026-04-20</creationDate>
     <copyright>Copyright (C) 2025 - 2026 by Peter Martin. All rights reserved.</copyright>
     <license>GNU General Public License version 2</license>
     <authorEmail>joomla@db8.nl</authorEmail>
