@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Load variables from .env
         run: |
@@ -27,7 +27,6 @@ jobs:
           VERSION_IN_XML=$(grep '<version>' update.xml | sed -n 's/.*<version>\(.*\)<\/version>.*/\1/p')
           echo "debug: VERSION_IN_XML=$VERSION_IN_XML"
           echo "VERSION_IN_XML=$VERSION_IN_XML" >> $GITHUB_ENV
-        working-directory: ../${{ env.EXTENSION }}
 
       - name: Check for version changes
         id: version_check
@@ -41,7 +40,7 @@ jobs:
     
       - name: Set up Python
         if: env.version_changed == 'true'
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
@@ -65,26 +64,13 @@ jobs:
 
       - name: Create Release
         if: env.version_changed == 'true'
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.VERSION }}
-          release_name: Release ${{ env.VERSION }}
+          name: Release ${{ env.VERSION }}
           draft: false
           prerelease: false
-
-      - name: Upload Release Asset
-        if: env.version_changed == 'true'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ env.EXTENSION }}-${{ env.VERSION }}.zip
-          asset_name: ${{ env.EXTENSION }}-${{ env.VERSION }}.zip
-          asset_content_type: application/zip
+          files: ${{ env.EXTENSION }}-${{ env.VERSION }}.zip
 
       - name: Update update.xml and commit changes
         if: env.version_changed == 'true'
