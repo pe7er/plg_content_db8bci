@@ -262,7 +262,7 @@ SVG;
     private function isView(string $option, string $view, ?string $extension = null): bool
     {
         return $this->app->input->get('option') === $option
-            && $this->app->input->get('view') === $view
+            && $this->app->input->get('view', $view) === $view
             && (!$extension || $this->app->input->get('extension') === $extension);
     }
 
